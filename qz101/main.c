@@ -2,6 +2,27 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+static int number ;
+
+void count_bin(FILE *counter_bin) {
+    int write[1];
+    int read[1];
+    if((counter_bin=fopen("counter.bin","r"))==NULL) {
+        counter_bin=fopen("counter.bin","wb+");
+        write[0]=1;
+        fwrite(write,sizeof(int),1,counter_bin);
+    } else { 
+        counter_bin=fopen("counter.bin","rb+");
+        fseek(counter_bin, 0, SEEK_SET);
+        fread(read,sizeof(int),1,counter_bin);
+        fclose(counter_bin);
+        write[0]=read[0]+1;
+        counter_bin=fopen("counter.bin","wb+");
+        fwrite(write,sizeof(int),1,counter_bin);
+    }
+    fclose(counter_bin);
+    number=write[0];
+}
 
 void print_7num(int random,int i,FILE *lottery_txt) {
     int r[6]={0};
@@ -49,17 +70,18 @@ void print_nothing (int i,FILE *lottery_txt) {
 
 int main() {
     FILE *lottery_txt;
-    int n ,random;
+    FILE *counter_bin;
+    int n,random;
+    
     printf("Welcome to CGU lottery\n How many lottery do you want to buy:");
     scanf("%d",&n);
     
-    int no, arr_write[256];
-
-    fwrite(arr_write, sizeof(int),no,lottery_txt);
+    char name[100];
+    count_bin(counter_bin);
+    sprintf(name,"lotto[%04d].txt",number);
+    lottery_txt=fopen(name,"w+");
     //n=6
-    lottery_txt = fopen("lottery.txt","w+");
-    fprintf(lottery_txt,"========= lotto649 =========\n");
-    fprintf(lottery_txt,"=======+No.%05d+========\n",arr_write);
+
     time_t curtime;
     time(&curtime);
     //time setup
@@ -68,6 +90,8 @@ int main() {
     size_t length=strlen(a);
     a[length-1]=0;
     //set char length
+    fprintf(lottery_txt,"==========================\n");
+    fprintf(lottery_txt,"=======+No.%05d+========\n",number);
     fprintf(lottery_txt,"=%s=\n",a);
     while(n>0) {
         if(n>5) {
@@ -77,6 +101,8 @@ int main() {
             break;
         }
     }
+   
+    
     srand((unsigned) time(NULL));
     random = rand();
     for(int i=1; i<=5; i++) {
@@ -90,8 +116,6 @@ int main() {
     fclose(lottery_txt);
     printf("已為您購買的 %d 組樂透組合輸出至 lotto.txt", n);
     
-    lottery_txt= fopen("lottert.txt","wb+");
-    
-    
     return 0;
 }
+
