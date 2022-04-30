@@ -2,40 +2,43 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+static int number;
+
+FILE *lottery_txt;
 
 void print_7num(int random,int i,FILE *lottery_txt) {
-    int r[7]={0};
-    int k;
-    int j;
-    int num7;
-    random+=i;
-    fprintf(lottery_txt,"[%d]: ",i);
+    int r[6]={0};
+    int k, j, num7;
+    random += i;
+    fprintf(lottery_txt,"[%d]: ", i);
     srand(random);
-    for(k=0;k<7;k++) {
+    for (k = 0 ;k<6 ;k++) {
         j = rand()%69+1;
-        r[k]=j;
-        for(int m=0;m<k;m++) {
-            if(r[k]==r[m]) {
-                k-=1;
+        r[k] = j;
+        for (int m = 0;m<k;m++) {
+            if(r[k] == r[m]) {
+                k -= 1;
                 break;
             }
         }
-    }
-    for (int a=0;a<6;a++) {
-        for (int b=a+1;b<7;b++) {
-            if(r[a]>r[b]) {
+    }//choose number 
+    
+    for (int a=0;a<5;a++) {
+        for (int b = a+1;b<6;b++) {
+            if (r[a]>r[b]) {
                 int temp;
-                temp=r[a];
-                r[a]=r[b];
-                r[b]=temp;
+                temp = r[a];
+                r[a] = r[b];
+                r[b] = temp;
             }
         }
-    }
-    for (k=0;k<7;k++) {
+    }//compare number
+    
+    for (k=0;k<6;k++) {
         fprintf(lottery_txt,"%02d ",r[k]);
     }
     num7 = random %10+1;
-    fprintf(lottery_txt,"%02d\n",num7);
+    fprintf(lottery_txt,"%02d\n",num7);//special number
 }
 
 void print_nothing (int i,FILE *lottery_txt) {
@@ -45,27 +48,14 @@ void print_nothing (int i,FILE *lottery_txt) {
         fprintf(lottery_txt,"-- ");
     }
     fprintf(lottery_txt,"\n");
-}
+}//no lottery put --
 
 int main() {
-    FILE *lottery_txt;
-    int n,random;
-    printf("Welcome to CGU lottery\n How many lottery do you want to buy:");
+    int n, id, random;
+    printf("Welcome to CGU lottery\n");
+    printf("How many lottery do you want to buy:");
     scanf("%d",&n);
     
-    //n=6
-    lottery_txt=fopen("lottery.txt","w+");
-    fprintf(lottery_txt,"========= lotto649 =========\n");
-    
-    time_t curtime;
-    time(&curtime);
-    //time setup
-    
-    char* a= ctime(&curtime);
-    size_t length=strlen(a);
-    a[length-1]=0;
-    //set char length
-    fprintf(lottery_txt,"=%s=\n",a);
     while(n>0) {
         if(n>5) {
             printf("please input number again:");
@@ -74,22 +64,38 @@ int main() {
             break;
         }
     }
+    
+    char name[100];
+    sprintf(name,"lotto[%04d].txt",number);
+    lottery_txt = fopen(name,"w+");
+    //file name change
+    
+    fprintf(lottery_txt,"===========lotto649============\n");
+
+    time_t curtime;
+    time(&curtime);
+    //time setup
+    
+    char* a= ctime(&curtime);
+    size_t length=strlen(a);
+    a[length-1]=0;
+    //set char length
+    
+    fprintf(lottery_txt,"=%s=\n",a);
+    
     srand((unsigned) time(NULL));
     random = rand();
-    for(int i=1; i<=6; i++) {
+    for (int i=1; i<= 5; i++) {
         if(i<=n) {
             print_7num(random, i, lottery_txt);
         } else {
             print_nothing(i,lottery_txt);
         }    
-    }
+    }//produce rand number
+    
     fprintf(lottery_txt, "========= csie@CGU =========");
     fclose(lottery_txt);
-    printf("已為您購買的 %d 組樂透組合輸出至 lotto.txt", n);
-    
+    printf("%d lottery you buy is(are) output to lotto.txt", n);
     
     return 0;
-
-
 }
-
