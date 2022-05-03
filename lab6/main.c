@@ -13,7 +13,7 @@ int _mult(int x, int y) {
 }
 
 int _div(int x, int y) {
-    return x%y;
+    return x/y;
 }
 
 int _pow(int x, int y) {
