@@ -16,7 +16,11 @@ class MMmanger {
 		    }
 			g_mm = (int*)malloc(num_of_space * sizeof(int));
 		}
-
+		
+		~MMmanger(){
+            		free(g_mm);
+           		free(calloced_p);
+        	}
 		int get_MMCapacity() {
 			int num_of_non_allocated_space = 0;
 			for(int i = 0; i < num_of_space; i++) {
