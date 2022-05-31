@@ -29,12 +29,12 @@ class StandardClock : Clock {
             second = z;
             meridian = w;
         }
-        void display() {
-            if (meridian[0] == 'A') {
-                cout << "上午" << Hour << ":" << minute << ":" << second << endl;
-            }
-            if (meridian[0] == 'P') {
-                cout << "下午" << Hour << ":" << minute << ":" << second << endl;
+       void display() {
+            if (!meridian.compare("AM"))
+                cout << Hour;
+            if (!meridian.compare("PM")) {
+                cout << Hour+12;
+            cout<< ":" << minute << ":" << second << endl;
             }
         }
 };
