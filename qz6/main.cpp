@@ -31,11 +31,11 @@ class StandardClock : Clock {
         }
        void display() {
             if (!meridian.compare("AM"))
-                cout << Hour;
-            if (!meridian.compare("PM")) {
-                cout << Hour+12;
+                cout << "上午";
+            if (!meridian.compare("PM")) 
+                cout << "下午";
             cout<< ":" << minute << ":" << second << endl;
-            }
+            
         }
 };
 
@@ -50,10 +50,10 @@ class MilitaryClock : Clock {
         void display() {
             if (!meridian.compare("AM"))
                 cout << Hour;
-            else if (!meridian.compare("PM")) {
+            else if (!meridian.compare("PM")) 
                 cout << Hour+12;
             cout<< ":" << minute << ":" << second << endl;
-            }
+            
         }
 };
 
