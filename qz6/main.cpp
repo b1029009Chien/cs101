@@ -50,7 +50,7 @@ class MilitaryClock : Clock {
         void display() {
             if (!meridian.compare("AM"))
                 cout << Hour;
-            if (!meridian.compare("PM")) {
+            else if (!meridian.compare("PM")) {
                 cout << Hour+12;
             cout<< ":" << minute << ":" << second << endl;
             }
