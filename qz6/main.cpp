@@ -34,7 +34,7 @@ class StandardClock : Clock {
                 cout << "上午";
             if (!meridian.compare("PM")) 
                 cout << "下午";
-            cout<< ":" << minute << ":" << second << endl;
+            cout << Hour << ":" << minute << ":" << second << endl;
             
         }
 };
