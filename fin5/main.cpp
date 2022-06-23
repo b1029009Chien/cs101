@@ -11,7 +11,7 @@ class MMmanger {
 		
 		MMmanger(int size) {
 			space = size;
-			calloced_p = new int* [10]//C++用法;
+			calloced_p = new int* [10];//C++用法;
 			g_mm = new int [10];//C++用法 
 			//calloced_p = (int**)malloc(space * sizeof(int*));
 			for(int i = 0; i < space; i++) {
@@ -82,13 +82,25 @@ class MMmanger {
 		    if(!flag) {
 		        cout << "<-out of space : demand " << size;
 		    }
-		    cout << endl;
+		    if(get_MMCapacity() == 0) cout << " <- No space";
+            cout << endl;
 		}
 };
 
 int main() {
 	MMmanger mmer(10);
     int* p1 = mmer.calloc_MM(1);
+    int* p2 = mmer.calloc_MM(2);
+    int* p3 = mmer.calloc_MM(3);
+    int* p4 = mmer.calloc_MM(4);
+    mmer.free_MM(p1);
+    mmer.free_MM(p4);
+    int* p5 = mmer.calloc_MM(6);
+    return 0;
+}
+
+
+
     int* p2 = mmer.calloc_MM(2);
     int* p3 = mmer.calloc_MM(3);
     int* p4 = mmer.calloc_MM(4);
