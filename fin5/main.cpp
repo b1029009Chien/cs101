@@ -88,7 +88,7 @@ class MMmanger {
 };
 
 int main() {
-	MMmanger mmer(10);
+　　MMmanger mmer(10);
     int* p1 = mmer.calloc_MM(1);
     int* p2 = mmer.calloc_MM(2);
     int* p3 = mmer.calloc_MM(3);
